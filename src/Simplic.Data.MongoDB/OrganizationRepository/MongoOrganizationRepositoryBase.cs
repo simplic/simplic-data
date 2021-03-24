@@ -101,10 +101,10 @@ namespace Simplic.Data.MongoDB
         }
     }
 
-    public abstract class BaseOrganizationRepository<TDocument> : MongoOrganizationRepositoryBase<TDocument, OrganizationFilterBase>
+    public abstract class MongoOrganizationRepositoryBase<TDocument> : MongoOrganizationRepositoryBase<TDocument, OrganizationFilterBase>
         where TDocument : OrganizationDocumentBase
     {
-        protected BaseOrganizationRepository(IMongoContext context, IOrganizationIdProvider organizationIdProvider) : base(context, organizationIdProvider)
+        protected MongoOrganizationRepositoryBase(IMongoContext context, IOrganizationIdProvider organizationIdProvider) : base(context, organizationIdProvider)
         {
         }
     }
