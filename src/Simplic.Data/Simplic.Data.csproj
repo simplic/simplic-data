@@ -44,6 +44,12 @@
     <Compile Include="IExternalDataBase.cs" />
     <Compile Include="IModelIdentity.cs" />
     <Compile Include="IRepositoryBase.cs" />
+    <Compile Include="NoSql\IDatabaseContext.cs" />
+    <Compile Include="NoSql\IDocument.cs" />
+    <Compile Include="NoSql\IFilter.cs" />
+    <Compile Include="NoSql\IOrganizationRepository.cs" />
+    <Compile Include="NoSql\IReadOnlyRepository.cs" />
+    <Compile Include="NoSql\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryGroupAttribute.cs" />
   </ItemGroup>

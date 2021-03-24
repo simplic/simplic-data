@@ -1,2 +1,5 @@
 <ReleaseNotes>
+  <ChangeSet>
+    <Change type="feature">Add NoSql data layer feature.</Change>
+  </ChangeSet>
 </ReleaseNotes>
