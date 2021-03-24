@@ -7,13 +7,13 @@ using Simplic.Data.NoSql;
 
 namespace Simplic.Data.MongoDB
 {
-    public abstract class OrganizationRepositoryBase<TDocument, TFilter> : BaseRepository<Guid, TDocument, TFilter>, IOrganizationRepository<Guid, TDocument, TFilter>
+    public abstract class MongoOrganizationRepositoryBase<TDocument, TFilter> : MongoRepositoryBase<Guid, TDocument, TFilter>, IOrganizationRepository<Guid, TDocument, TFilter>
         where TDocument : OrganizationDocumentBase
         where TFilter : OrganizationFilterBase, new()
     {
         private readonly IOrganizationIdProvider _organizationIdProvider;
 
-        protected OrganizationRepositoryBase(IMongoContext context, IOrganizationIdProvider organizationIdProvider) : base(context)
+        protected MongoOrganizationRepositoryBase(IMongoContext context, IOrganizationIdProvider organizationIdProvider) : base(context)
         {
             _organizationIdProvider = organizationIdProvider;
         }
@@ -101,7 +101,7 @@ namespace Simplic.Data.MongoDB
         }
     }
 
-    public abstract class BaseOrganizationRepository<TDocument> : OrganizationRepositoryBase<TDocument, OrganizationFilterBase>
+    public abstract class BaseOrganizationRepository<TDocument> : MongoOrganizationRepositoryBase<TDocument, OrganizationFilterBase>
         where TDocument : OrganizationDocumentBase
     {
         protected BaseOrganizationRepository(IMongoContext context, IOrganizationIdProvider organizationIdProvider) : base(context, organizationIdProvider)

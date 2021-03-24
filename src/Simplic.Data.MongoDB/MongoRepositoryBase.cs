@@ -4,11 +4,11 @@ using Simplic.Data.NoSql;
 
 namespace Simplic.Data.MongoDB
 {
-    public abstract class BaseRepository<TId, TDocument, TFilter> : ReadOnlyRepositoryBase<TId, TDocument, TFilter>, IRepository<TId, TDocument, TFilter>
+    public abstract class MongoRepositoryBase<TId, TDocument, TFilter> : MongoReadOnlyRepositoryBase<TId, TDocument, TFilter>, IRepository<TId, TDocument, TFilter>
         where TDocument : IDocument<TId>
         where TFilter : IFilter<TId>, new()
     {
-        protected BaseRepository(IMongoContext context) : base(context)
+        protected MongoRepositoryBase(IMongoContext context) : base(context)
         {
         }
 
