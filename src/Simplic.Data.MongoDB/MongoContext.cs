@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Simplic.Configuration;
-using Simplic.Data.NoSql;
 
 namespace Simplic.Data.MongoDB
 {
@@ -39,8 +38,7 @@ namespace Simplic.Data.MongoDB
             if (MongoClient != null)
                 return;
 
-            var cstr = "";
-
+            string cstr;
             if (connectionStringCache.ContainsKey("MongoDB"))
                 cstr = connectionStringCache["MongoDB"];
             else
@@ -101,7 +99,7 @@ namespace Simplic.Data.MongoDB
         /// <summary>
         /// Gets or sets whether transactions are allowed or not
         /// </summary>
-        public bool EnableTransactions { get; private set; } = false;
+        public bool EnableTransactions { get; private set; } = true;
 
         /// <summary>
         /// Get mongodb collection

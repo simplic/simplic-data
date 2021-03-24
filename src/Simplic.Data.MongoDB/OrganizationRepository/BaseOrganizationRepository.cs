@@ -8,8 +8,8 @@ using Simplic.Data.NoSql;
 namespace Simplic.Data.MongoDB
 {
     public abstract class BaseOrganizationRepository<TDocument, TFilter> : BaseRepository<Guid, TDocument, TFilter>, IOrganizationRepository<Guid, TDocument, TFilter>
-        where TDocument : BaseDocument
-        where TFilter : BaseFilter, new()
+        where TDocument : BaseOrganizationDocument
+        where TFilter : BaseOrganizationFilter, new()
     {
         private readonly IOrganizationIdProvider _organizationIdProvider;
 
@@ -101,8 +101,8 @@ namespace Simplic.Data.MongoDB
         }
     }
 
-    public abstract class BaseOrganizationRepository<TDocument> : BaseOrganizationRepository<TDocument, BaseFilter>
-        where TDocument : BaseDocument
+    public abstract class BaseOrganizationRepository<TDocument> : BaseOrganizationRepository<TDocument, BaseOrganizationFilter>
+        where TDocument : BaseOrganizationDocument
     {
         protected BaseOrganizationRepository(IMongoContext context, IOrganizationIdProvider organizationIdProvider) : base(context, organizationIdProvider)
         {

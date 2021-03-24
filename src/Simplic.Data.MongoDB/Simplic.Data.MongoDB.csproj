@@ -47,8 +47,8 @@
     <Compile Include="IOrganizationIdProvider.cs" />
     <Compile Include="IUserIdProvider.cs" />
     <Compile Include="MongoContext.cs" />
-    <Compile Include="OrganizationRepository\BaseDocument.cs" />
-    <Compile Include="OrganizationRepository\BaseFilter.cs" />
+    <Compile Include="OrganizationRepository\BaseOrganizationDocument.cs" />
+    <Compile Include="OrganizationRepository\BaseOrganizationFilter.cs" />
     <Compile Include="OrganizationRepository\BaseOrganizationRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace Simplic.Data.MongoDB
 {
-    public class BaseReadOnlyRepository<TId, TDocument, TFilter> : IReadOnlyRepository<TId, TDocument, TFilter>
+    public abstract class BaseReadOnlyRepository<TId, TDocument, TFilter> : IReadOnlyRepository<TId, TDocument, TFilter>
         where TDocument : IDocument<TId>
         where TFilter : IFilter<TId>, new()
     {

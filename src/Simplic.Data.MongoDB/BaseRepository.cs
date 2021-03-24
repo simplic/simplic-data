@@ -4,7 +4,7 @@ using Simplic.Data.NoSql;
 
 namespace Simplic.Data.MongoDB
 {
-    public class BaseRepository<TId, TDocument, TFilter> : BaseReadOnlyRepository<TId, TDocument, TFilter>, IRepository<TId, TDocument, TFilter>
+    public abstract class BaseRepository<TId, TDocument, TFilter> : BaseReadOnlyRepository<TId, TDocument, TFilter>, IRepository<TId, TDocument, TFilter>
         where TDocument : IDocument<TId>
         where TFilter : IFilter<TId>, new()
     {
