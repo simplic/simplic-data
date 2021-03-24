@@ -1,0 +1,111 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using MongoDB.Driver;
+using Simplic.Data.NoSql;
+
+namespace Simplic.Data.MongoDB
+{
+    public abstract class BaseOrganizationRepository<TDocument, TFilter> : BaseRepository<Guid, TDocument, TFilter>, IOrganizationRepository<Guid, TDocument, TFilter>
+        where TDocument : BaseDocument
+        where TFilter : BaseFilter, new()
+    {
+        private readonly IOrganizationIdProvider _organizationIdProvider;
+
+        protected BaseOrganizationRepository(IMongoContext context, IOrganizationIdProvider organizationIdProvider) : base(context)
+        {
+            _organizationIdProvider = organizationIdProvider;
+        }
+
+        public override async Task<TDocument> GetByIdAsync(Guid id)
+        {
+            return await GetByIdAsync(id, false);
+        }
+
+        public async Task<TDocument> GetByIdAsync(Guid id, bool queryAllOrganizations)
+        {
+            await Initialize();
+
+            var data = await GetByFilterAsync(new TFilter
+            {
+                Id = id,
+                QueryAllOrganizations = queryAllOrganizations
+            });
+
+            return data.SingleOrDefault();
+        }
+
+        public override async Task<IEnumerable<TDocument>> GetAllAsync()
+        {
+            return await GetAllAsync(false);
+        }
+
+        public async Task<IEnumerable<TDocument>> GetAllAsync(bool queryAllOrganizations)
+        {
+            await Initialize();
+
+            return await GetByFilterAsync(new TFilter
+            {
+                QueryAllOrganizations = queryAllOrganizations
+            });
+        }
+
+        public override async Task<IEnumerable<TDocument>> GetByFilterAsync(TFilter filter)
+        {
+            await Initialize();
+
+            filter.OrganizationId = filter.OrganizationId.HasValue
+                ? filter.OrganizationId
+                : filter.QueryAllOrganizations
+                    ? null
+                    : _organizationIdProvider.GetOrganizationId();
+
+            return (await Collection.FindAsync(BuildFilterQuery(filter)))
+                    .ToEnumerable();
+        }
+
+        private new FilterDefinition<TDocument> BuildFilterQuery(TFilter filter)
+        {
+            var filterQueries = GetFilterQueries(filter).ToList();
+            var builder = Builders<TDocument>.Filter;
+
+            if (filter.Id != Guid.Empty)
+            {
+                filterQueries.Add(builder.Eq(d => d.Id, filter.Id));
+            }
+
+            if (filter.OrganizationId.HasValue)
+            {
+                filterQueries.Add(builder.Eq(d => d.OrganizationId, filter.OrganizationId));
+            }
+
+            if (filter.IsDeleted.HasValue)
+            {
+                filterQueries.Add(builder.Eq(d => d.IsDeleted, filter.IsDeleted));
+            }
+
+            if (filter.IncludeIds != null)
+            {
+                filterQueries.Add(builder.In(o => o.Id, filter.IncludeIds));
+            }
+
+            if (filter.ExcludeId.HasValue)
+            {
+                filterQueries.Add(builder.Ne(d => d.Id, filter.ExcludeId));
+            }
+
+            return filterQueries.Any()
+                ? builder.And(filterQueries)
+                : builder.Empty;
+        }
+    }
+
+    public abstract class BaseOrganizationRepository<TDocument> : BaseOrganizationRepository<TDocument, BaseFilter>
+        where TDocument : BaseDocument
+    {
+        protected BaseOrganizationRepository(IMongoContext context, IOrganizationIdProvider organizationIdProvider) : base(context, organizationIdProvider)
+        {
+        }
+    }
+}
