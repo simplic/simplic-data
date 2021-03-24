@@ -99,7 +99,7 @@ namespace Simplic.Data.MongoDB
         /// <summary>
         /// Gets or sets whether transactions are allowed or not
         /// </summary>
-        public bool EnableTransactions { get; private set; } = true;
+        public bool EnableTransactions { get; private set; } = false;
 
         /// <summary>
         /// Get mongodb collection
