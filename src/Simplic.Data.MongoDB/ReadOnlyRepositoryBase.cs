@@ -6,19 +6,19 @@ using MongoDB.Driver;
 
 namespace Simplic.Data.MongoDB
 {
-    public abstract class BaseReadOnlyRepository<TId, TDocument, TFilter> : IReadOnlyRepository<TId, TDocument, TFilter>
+    public abstract class ReadOnlyRepositoryBase<TId, TDocument, TFilter> : IReadOnlyRepository<TId, TDocument, TFilter>
         where TDocument : IDocument<TId>
         where TFilter : IFilter<TId>, new()
     {
         protected readonly IMongoContext Context;
         protected IMongoCollection<TDocument> Collection;
 
-        protected BaseReadOnlyRepository(IMongoContext context)
+        protected ReadOnlyRepositoryBase(IMongoContext context)
         {
             Context = context;
         }
 
-        protected BaseReadOnlyRepository(IMongoContext context, string configurationKey)
+        protected ReadOnlyRepositoryBase(IMongoContext context, string configurationKey)
         {
             Context = context;
             context.SetConfiguration(configurationKey);

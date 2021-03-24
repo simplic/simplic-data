@@ -7,7 +7,7 @@ namespace Simplic.Data.MongoDB
     /// <summary>
     /// Organization data filter
     /// </summary>
-    public class BaseOrganizationFilter : IFilter<Guid>
+    public class OrganizationFilterBase : IFilter<Guid>
     {
         /// <summary>
         /// Gets or sets the data id

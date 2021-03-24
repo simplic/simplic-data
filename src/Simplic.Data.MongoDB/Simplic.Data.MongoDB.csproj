@@ -41,15 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseReadOnlyRepository.cs" />
-    <Compile Include="BaseRepository.cs" />
+    <Compile Include="ReadOnlyRepositoryBase.cs" />
+    <Compile Include="RepositoryBase.cs" />
     <Compile Include="IMongoContext.cs" />
     <Compile Include="IOrganizationIdProvider.cs" />
     <Compile Include="IUserIdProvider.cs" />
     <Compile Include="MongoContext.cs" />
-    <Compile Include="OrganizationRepository\BaseOrganizationDocument.cs" />
-    <Compile Include="OrganizationRepository\BaseOrganizationFilter.cs" />
-    <Compile Include="OrganizationRepository\BaseOrganizationRepository.cs" />
+    <Compile Include="OrganizationRepository\OrganizationDocumentBase.cs" />
+    <Compile Include="OrganizationRepository\OrganizationFilterBase.cs" />
+    <Compile Include="OrganizationRepository\OrganizationRepositoryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
