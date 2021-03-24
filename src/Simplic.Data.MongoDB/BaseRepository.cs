@@ -28,7 +28,7 @@ namespace Simplic.Data.MongoDB
         {
             await Initialize();
 
-            var document = await GetByIdAsync(id);
+            var document = await GetAsync(id);
             if (document != null)
             {
                 document.IsDeleted = true;

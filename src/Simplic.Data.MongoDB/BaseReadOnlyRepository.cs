@@ -36,7 +36,7 @@ namespace Simplic.Data.MongoDB
 
         protected virtual string GetCollectionName() => typeof(TDocument).Name;
 
-        public virtual async Task<TDocument> GetByIdAsync(TId id)
+        public virtual async Task<TDocument> GetAsync(TId id)
         {
             await Initialize();
 

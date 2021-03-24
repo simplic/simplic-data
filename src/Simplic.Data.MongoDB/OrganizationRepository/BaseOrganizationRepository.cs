@@ -18,12 +18,12 @@ namespace Simplic.Data.MongoDB
             _organizationIdProvider = organizationIdProvider;
         }
 
-        public override async Task<TDocument> GetByIdAsync(Guid id)
+        public override async Task<TDocument> GetAsync(Guid id)
         {
-            return await GetByIdAsync(id, false);
+            return await GetAsync(id, false);
         }
 
-        public async Task<TDocument> GetByIdAsync(Guid id, bool queryAllOrganizations)
+        public async Task<TDocument> GetAsync(Guid id, bool queryAllOrganizations)
         {
             await Initialize();
 

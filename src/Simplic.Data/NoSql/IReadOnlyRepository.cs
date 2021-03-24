@@ -19,7 +19,7 @@ namespace Simplic.Data.NoSql
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Entity</returns>
-        Task<TDocument> GetByIdAsync(TId id);
+        Task<TDocument> GetAsync(TId id);
 
         /// <summary>
         /// Get all entities from data source
