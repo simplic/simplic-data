@@ -45,11 +45,11 @@ namespace Simplic.Data.MongoDB
                 cstr = connectionStringCache["MongoDB"];
             else
             {
-                var configuration = configurationService.GetByName("MongoDB");
-                connectionStringCache["MongoDB"] = configuration.ConnectionString;
+                cstr = configurationService.GetByName("MongoDB")?.ConnectionString ?? "";
+                connectionStringCache["MongoDB"] = cstr;
             }
 
-            MongoClient = new MongoClient(connectionStringCache["MongoDB"]);
+            MongoClient = new MongoClient(cstr);
             database = MongoClient.GetDatabase("simplic");
         }
 
