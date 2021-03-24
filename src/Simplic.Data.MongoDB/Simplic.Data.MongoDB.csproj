@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DDA22FE5-3893-4C26-A1AD-EB19A9379BC7}</ProjectGuid>
+    <ProjectGuid>{B2685C75-0BBE-4F8F-963F-D707E4EDC3AB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Simplic.Data</RootNamespace>
-    <AssemblyName>Simplic.Data</AssemblyName>
+    <RootNamespace>Simplic.Data.MongoDB</RootNamespace>
+    <AssemblyName>Simplic.Data.MongoDB</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,24 +41,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IExternalDataBase.cs" />
-    <Compile Include="IModelIdentity.cs" />
-    <Compile Include="IRepositoryBase.cs" />
-    <Compile Include="NoSql\IDatabaseContext.cs" />
-    <Compile Include="NoSql\IDocument.cs" />
-    <Compile Include="NoSql\IFilter.cs" />
-    <Compile Include="NoSql\IOrganizationRepository.cs" />
-    <Compile Include="NoSql\IReadOnlyRepository.cs" />
-    <Compile Include="NoSql\IRepository.cs" />
+    <Compile Include="MongoReadOnlyRepositoryBase.cs" />
+    <Compile Include="MongoRepositoryBase.cs" />
+    <Compile Include="IMongoContext.cs" />
+    <Compile Include="IOrganizationIdProvider.cs" />
+    <Compile Include="IUserIdProvider.cs" />
+    <Compile Include="MongoContext.cs" />
+    <Compile Include="OrganizationRepository\OrganizationDocumentBase.cs" />
+    <Compile Include="OrganizationRepository\OrganizationFilterBase.cs" />
+    <Compile Include="OrganizationRepository\MongoOrganizationRepositoryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RepositoryGroupAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simplic.Data\Simplic.Data.csproj">
+      <Project>{dda22fe5-3893-4c26-a1ad-eb19a9379bc7}</Project>
+      <Name>Simplic.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver">
+      <Version>2.12.1</Version>
+    </PackageReference>
+    <PackageReference Include="Simplic.Configuration">
+      <Version>7.0.20.1006</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
