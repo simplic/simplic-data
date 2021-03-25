@@ -3,7 +3,7 @@
     <Change type="feature">Add NoSql data layer feature.</Change>
     <Change type="feature">Add MongoDB database access.</Change>
   </ChangeSet>  
-  <ChangeSet>
+  <ChangeSet guid="387d98d8-4080-46c3-a4d9-7d70ca1e3968">
     <Change type="feature">Add upsert feature to MongoDB repository.</Change>
   </ChangeSet>
 </ReleaseNotes>
