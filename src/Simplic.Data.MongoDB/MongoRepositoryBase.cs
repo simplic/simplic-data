@@ -4,26 +4,48 @@ using Simplic.Data.NoSql;
 
 namespace Simplic.Data.MongoDB
 {
+    /// <summary>
+    /// Base repository for reading and writing data from and to the mongo db
+    /// </summary>
+    /// <typeparam name="TId">Type of the key</typeparam>
+    /// <typeparam name="TDocument">Document type</typeparam>
+    /// <typeparam name="TFilter">Filter type</typeparam>
     public abstract class MongoRepositoryBase<TId, TDocument, TFilter> : MongoReadOnlyRepositoryBase<TId, TDocument, TFilter>, IRepository<TId, TDocument, TFilter>
         where TDocument : IDocument<TId>
         where TFilter : IFilter<TId>, new()
     {
+        /// <summary>
+        /// Initialize base repository
+        /// </summary>
+        /// <param name="context"></param>
         protected MongoRepositoryBase(IMongoContext context) : base(context)
         {
         }
 
+        /// <summary>
+        /// Create new entity
+        /// </summary>
+        /// <param name="entity">Entity to create</param>
         public virtual async Task CreateAsync(TDocument document)
         {
             await Initialize();
             Context.AddCommand(() => Collection.InsertOneAsync(document));
         }
 
+        /// <summary>
+        /// Update an entity in the database
+        /// </summary>
+        /// <param name="obj"></param>
         public virtual async Task UpdateAsync(TDocument document)
         {
             await Initialize();
             Context.AddCommand(() => Collection.ReplaceOneAsync(GetFilterById(document.Id), document));
         }
 
+        /// <summary>
+        /// Mark entity as deleted in database
+        /// </summary>
+        /// <param name="id">Entity id</param>
         public virtual async Task DeleteAsync(TId id)
         {
             await Initialize();
@@ -36,11 +58,34 @@ namespace Simplic.Data.MongoDB
             }
         }
 
+        /// <summary>
+        /// Create or replace entity
+        /// </summary>
+        /// <param name="filter">Filter instance</param>
+        /// <param name="entity">Entity instance</param>
+        public async Task UpsertAsync(TFilter filter, TDocument entity)
+        {
+            await Initialize();
+
+            var filterQuery = BuildFilterQuery(filter);
+
+            Context.AddCommand(() => Collection.ReplaceOneAsync(filterQuery, entity, new ReplaceOptions { IsUpsert = true }));
+        }
+
+        /// <summary>
+        /// Commit data
+        /// </summary>
+        /// <returns>Amount of changed data</returns>
         public virtual async Task<int> CommitAsync()
         {
             return await Context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Gets base filter using an entity id
+        /// </summary>
+        /// <param name="id">Unique entity id</param>
+        /// <returns>Filter instance</returns>
         protected FilterDefinition<TDocument> GetFilterById(TId id)
         {
             return BuildFilterQuery(new TFilter

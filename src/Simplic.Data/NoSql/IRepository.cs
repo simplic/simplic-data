@@ -33,6 +33,13 @@ namespace Simplic.Data.NoSql
         Task DeleteAsync(TId id);
 
         /// <summary>
+        /// Upsert an entity
+        /// </summary>
+        /// <param name="filter">Filter for upserting</param>
+        /// <param name="entity">Entity instance</param>
+        Task UpsertAsync(TFilter filter, TDocument entity);
+
+        /// <summary>
         /// Commit data
         /// </summary>
         /// <returns>Amount of changed data</returns>
