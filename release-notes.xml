@@ -2,5 +2,8 @@
   <ChangeSet guid="34ed0f9a-cbe8-4315-95d4-61183a8090ba">
     <Change type="feature">Add NoSql data layer feature.</Change>
     <Change type="feature">Add MongoDB database access.</Change>
+  </ChangeSet>  
+  <ChangeSet>
+    <Change type="feature">Add upsert feature to MongoDB repository.</Change>
   </ChangeSet>
 </ReleaseNotes>
