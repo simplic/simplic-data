@@ -54,11 +54,17 @@
     <PackageReference Include="Dapper">
       <Version>2.0.30</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
     <PackageReference Include="Simplic.Cache">
       <Version>6.0.18.619</Version>
     </PackageReference>
     <PackageReference Include="Simplic.CoreLib">
       <Version>6.14.418.1002</Version>
+    </PackageReference>
+    <PackageReference Include="Simplic.InMemoryDB">
+      <Version>1.0.120.1014</Version>
     </PackageReference>
     <PackageReference Include="Simplic.Sql">
       <Version>6.2.18.926</Version>
