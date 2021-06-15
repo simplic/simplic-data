@@ -154,17 +154,14 @@ namespace Simplic.Data.Sql
 
             return sqlService.OpenConnection((connection) =>
             {
+                var key = $"{TableName}_{PrimaryKeyColumn}_{GetId(obj)}";
+
                 if (UseCache && cacheService != null)
-                {
-                    var key = $"{TableName}_{PrimaryKeyColumn}_{GetId(obj)}";
                     cacheService.Remove<TModel>(key);
-                }
 
                 if (UseCache && keyValueStore != null)
                 {
-                    var key = $"{TableName}_{PrimaryKeyColumn}_{GetId(obj)}";
                     var json = JsonConvert.SerializeObject(obj);
-
                     keyValueStore.StringSet(key, json);
                 }
 
@@ -181,18 +178,13 @@ namespace Simplic.Data.Sql
         /// <returns>True if successful</returns>
         public virtual bool Delete(TModel obj)
         {
+            var key = $"{TableName}_{PrimaryKeyColumn}_{GetId(obj)}";
+
             if (UseCache && cacheService != null)
-            {
-                var key = $"{TableName}_{PrimaryKeyColumn}_{GetId(obj)}";
                 cacheService.Remove<TModel>(key);
-            }
 
             if (UseCache && keyValueStore != null)
-            {
-                // Clear cache
-                var key = $"{TableName}_{PrimaryKeyColumn}_{GetId(obj)}";
                 keyValueStore.StringSet(key, null);
-            }
 
             return sqlService.OpenConnection((connection) =>
             {
@@ -208,18 +200,13 @@ namespace Simplic.Data.Sql
         /// <returns>True if successful</returns>
         public virtual bool Delete(TId id)
         {
+            var key = $"{TableName}_{PrimaryKeyColumn}_{id}";
+
             if (UseCache && cacheService != null)
-            {
-                var key = $"{TableName}_{PrimaryKeyColumn}_{GetId(obj)}";
                 cacheService.Remove<TModel>(key);
-            }
 
             if (UseCache && keyValueStore != null)
-            {
-                // Clear cache
-                var key = $"{TableName}_{PrimaryKeyColumn}_{id}";
                 keyValueStore.StringSet(key, null);
-            }
 
             return sqlService.OpenConnection((connection) =>
             {
