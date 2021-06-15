@@ -74,6 +74,13 @@ namespace Simplic.Data.Sql
                     return obj;
             }
 
+            if (UseCache && keyValueStore != null)
+            {
+                var json = keyValueStore.StringGet(key);
+                if (!string.IsNullOrWhiteSpace(json))
+                    return JsonConvert.DeserializeObject<TModel>(json);
+            }
+
             obj = GetByColumn<TId>(PrimaryKeyColumn, id);
 
             if (obj != null)
