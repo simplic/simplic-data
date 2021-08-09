@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Simplic.Data
 {
     /// <summary>
-    /// Implements the basic service method with a repository that derived from <see cref="IRepositoryBase{TId, TModel}"/>
+    /// Implements the basic service method with a repository that derives from <see cref="IRepositoryBase{TId, TModel}"/>
     /// </summary>
     /// <typeparam name="TId">A key which represents the primary key in the database</typeparam>
     /// <typeparam name="TModel">A model that contains the necessary information</typeparam>
