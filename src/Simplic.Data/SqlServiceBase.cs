@@ -10,7 +10,7 @@ namespace Simplic.Data
     /// Implements the basic service method with a repository that derived from <see cref="IRepositoryBase{TId, TModel}"/>
     /// </summary>
     /// <typeparam name="TId">A key which represents the primary key in the database</typeparam>
-    /// <typeparam name="TModel"></typeparam>
+    /// <typeparam name="TModel">A model that contains the necessary information</typeparam>
     public abstract class SqlServiceBase<TId, TModel> : IRepositoryBase<TId, TModel>
     {
         private readonly IRepositoryBase<TId, TModel> repositoryBase;
