@@ -22,6 +22,11 @@ namespace Simplic.Data.MongoDB
         {
         }
 
+        protected MongoRepositoryBase(IMongoContext context, string configurationKey) : base(context, configurationKey)
+        {
+            
+        }
+
         /// <summary>
         /// Create new entity
         /// </summary>

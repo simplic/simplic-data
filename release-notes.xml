@@ -6,6 +6,9 @@
   <ChangeSet guid="387d98d8-4080-46c3-a4d9-7d70ca1e3968">
     <Change type="feature">Add upsert feature to MongoDB repository.</Change>
   </ChangeSet>
+  <ChangeSet>
+    <Change type="feature">Adds redis (in-memory) caching to SqlRepositoryBase.</Change>
+  </ChangeSet>
   <ChangeSet guid="c72d1414-6459-4e3d-b10c-35f3421b84f1">
     <Change type="feature">Add sql service that provides a basic implementation.</Change>
   </ChangeSet>
