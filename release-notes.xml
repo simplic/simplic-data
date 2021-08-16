@@ -9,4 +9,7 @@
   <ChangeSet>
     <Change type="feature">Adds redis (in-memory) caching to SqlRepositoryBase.</Change>
   </ChangeSet>
+  <ChangeSet guid="c72d1414-6459-4e3d-b10c-35f3421b84f1">
+    <Change type="feature">Add sql service that provides a basic implementation.</Change>
+  </ChangeSet>
 </ReleaseNotes>
