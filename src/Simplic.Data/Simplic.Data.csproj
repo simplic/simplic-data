@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IExternalDataBase.cs" />
+    <Compile Include="IInstanceData.cs" />
     <Compile Include="IModelIdentity.cs" />
     <Compile Include="IRepositoryBase.cs" />
     <Compile Include="NoSql\IDatabaseContext.cs" />

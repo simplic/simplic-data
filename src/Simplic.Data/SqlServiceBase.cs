@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simplic.Data
 {
@@ -14,6 +11,7 @@ namespace Simplic.Data
     public abstract class SqlServiceBase<TId, TModel> : IRepositoryBase<TId, TModel>
     {
         private readonly IRepositoryBase<TId, TModel> repositoryBase;
+        private readonly ISessionService sessionService;
 
         /// <summary>
         /// Constructor for dependency injection
@@ -56,8 +54,25 @@ namespace Simplic.Data
         /// </summary>
         /// <param name="obj"><inheritdoc/></param>
         /// <returns><inheritdoc/></returns>
-        public virtual bool Save(TModel obj) => repositoryBase.Save(obj);
+        public virtual bool Save(TModel obj)
+        {
+            if (obj is IInstanceData instanceData)
+            {
+                if (instanceData.CreateDateTime == default)
+                {
+                    instanceData.CreateDateTime = DateTime.Now;
+                }
+
+                if (instanceData.CreateUserId == default)
+                {
+                    instanceData.CreateUserId = sessionService.CurrentSession.UserId;
+                }
+
+                instanceData.UpdateDateTime = DateTime.Now;
+                instanceData.UpdateUserId = sessionService.CurrentSession.UserId;
+            }
+
+            return repositoryBase.Save(obj);
+        }
     }
-
-
 }
