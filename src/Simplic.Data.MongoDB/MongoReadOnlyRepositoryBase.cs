@@ -3,6 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Simplic.Data.NoSql;
 using MongoDB.Driver;
+using System;
+using System.Linq.Expressions;
+using System.Threading;
 
 namespace Simplic.Data.MongoDB
 {
@@ -86,6 +89,37 @@ namespace Simplic.Data.MongoDB
             return filterQueries.Any()
                 ? builder.And(filterQueries)
                 : builder.Empty;
+        }
+
+        /// <summary>
+        /// Finds the documents matching the filter.
+        /// </summary>
+        /// <param name="predicate">The filter predicate</param>
+        /// <param name="limit">Number of requested entities</param>
+        /// <returns><see cref="TDocument"/> entities matching the search criteria</returns>
+        public virtual async Task<IEnumerable<TDocument>> FindAsync(Func<TDocument, bool> predicate, int? limit)
+        {
+            await Initialize();
+
+            var expression = Expression.Lambda<Func<TDocument, bool>>(Expression.Call(predicate.Method));
+            var response = new List<TDocument>();
+            using (var cursor = await Collection.FindAsync(expression, cancellationToken: CancellationToken.None))
+            {
+                while (await cursor.MoveNextAsync())
+                {
+                    if (limit.HasValue)
+                    {
+                        var requestedElements = cursor.Current.ToList().Take(limit.Value);
+                        limit -= requestedElements.Count();
+                        response.AddRange(requestedElements);
+                        if (limit.Value == 0)
+                            break;
+                    }
+                    else
+                        response.AddRange(cursor.Current);
+                }
+            }
+            return response;
         }
     }
 }
