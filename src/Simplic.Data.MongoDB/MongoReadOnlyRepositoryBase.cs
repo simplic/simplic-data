@@ -106,45 +106,23 @@ namespace Simplic.Data.MongoDB
 
             var response = new List<TDocument>();
             SortDefinition<TDocument> sort = null;
+
             if (!string.IsNullOrWhiteSpace(sortField))
                 sort = isAscending
                     ? Builders<TDocument>.Sort.Ascending(sortField)
                     : Builders<TDocument>.Sort.Descending(sortField);
 
-            using (var cursor = await Collection.FindAsync(BuildFilterQuery(filter), new FindOptions<TDocument, TDocument>()
+            var filterQuery = BuildFilterQuery(filter);
+
+            var findOptions = new FindOptions
             {
-                Sort = sort
-            }, cancellationToken: CancellationToken.None))
-            {
-                while (await cursor.MoveNextAsync())
-                {
-                    var requestedElements = cursor.Current.ToList();
-                    if(skip.HasValue && skip > 0)
-                    {
-                        if (skip > requestedElements.Count)
-                        {
-                            skip -= requestedElements.Count;
-                            continue;
-                        }
-                        else
-                        {
-                            skip = 0;
-                            requestedElements = requestedElements.Skip(skip.Value).ToList();
-                        }
-                    }
-                    if (limit.HasValue)
-                    {
-                        var tookElements = requestedElements.Take(limit.Value);
-                        limit -= tookElements.Count();
-                        response.AddRange(tookElements);
-                        if (limit.Value <= 0)
-                            break;
-                    }
-                    else
-                        response.AddRange(requestedElements);
-                }
-            }
-            return response;
+                
+            };
+
+            if (sort == null)
+                return Collection.Find(filterQuery, findOptions).Skip(skip).Limit(limit).ToEnumerable();
+            else
+                return Collection.Find(filterQuery, findOptions).Sort(sort).Skip(skip).Limit(limit).ToEnumerable();
         }
     }
 }
