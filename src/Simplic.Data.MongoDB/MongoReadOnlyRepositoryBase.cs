@@ -94,29 +94,54 @@ namespace Simplic.Data.MongoDB
         /// <summary>
         /// Finds the documents matching the filter.
         /// </summary>
-        /// <param name="predicate">The filter predicate</param>
+        /// <param name="filter">The filter predicate</param>
+        /// <param name="skip">Number of skipped entities</param>
         /// <param name="limit">Number of requested entities</param>
+        /// <param name="sortField">Sort field</param>
+        /// <param name="isAscending">Ascending or Descending sort</param>
         /// <returns><see cref="TDocument"/> entities matching the search criteria</returns>
-        public virtual async Task<IEnumerable<TDocument>> FindAsync(Func<TDocument, bool> predicate, int? limit)
+        public virtual async Task<IEnumerable<TDocument>> FindAsync(TFilter filter, int? skip, int? limit, string sortField, bool isAscending)
         {
             await Initialize();
 
-            var expression = Expression.Lambda<Func<TDocument, bool>>(Expression.Call(predicate.Method));
             var response = new List<TDocument>();
-            using (var cursor = await Collection.FindAsync(expression, cancellationToken: CancellationToken.None))
+            SortDefinition<TDocument> sort = null;
+            if (!string.IsNullOrWhiteSpace(sortField))
+                sort = isAscending
+                    ? Builders<TDocument>.Sort.Ascending(sortField)
+                    : Builders<TDocument>.Sort.Descending(sortField);
+
+            using (var cursor = await Collection.FindAsync(BuildFilterQuery(filter), new FindOptions<TDocument, TDocument>()
+            {
+                Sort = sort
+            }, cancellationToken: CancellationToken.None))
             {
                 while (await cursor.MoveNextAsync())
                 {
+                    var requestedElements = cursor.Current.ToList();
+                    if(skip.HasValue && skip > 0)
+                    {
+                        if (skip > requestedElements.Count)
+                        {
+                            skip -= requestedElements.Count;
+                            continue;
+                        }
+                        else
+                        {
+                            skip = 0;
+                            requestedElements = requestedElements.Skip(skip.Value).ToList();
+                        }
+                    }
                     if (limit.HasValue)
                     {
-                        var requestedElements = cursor.Current.ToList().Take(limit.Value);
-                        limit -= requestedElements.Count();
-                        response.AddRange(requestedElements);
-                        if (limit.Value == 0)
+                        var tookElements = requestedElements.Take(limit.Value);
+                        limit -= tookElements.Count();
+                        response.AddRange(tookElements);
+                        if (limit.Value <= 0)
                             break;
                     }
                     else
-                        response.AddRange(cursor.Current);
+                        response.AddRange(requestedElements);
                 }
             }
             return response;
