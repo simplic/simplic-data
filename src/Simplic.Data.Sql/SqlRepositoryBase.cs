@@ -1,7 +1,5 @@
 ﻿using Dapper;
-using Newtonsoft.Json;
 using Simplic.Cache;
-using Simplic.InMemoryDB;
 using Simplic.Sql;
 using System;
 using System.Collections.Generic;
@@ -28,33 +26,19 @@ namespace Simplic.Data.Sql
     {
         private readonly ISqlService sqlService;
         private readonly ISqlColumnService sqlColumnService;
-        private readonly ICacheService cacheService = null;
-        private readonly IKeyValueStore keyValueStore = null;
+        private readonly ICacheService cacheService;
+
 
         /// <summary>
         /// Initialize sql service
         /// </summary>
         /// <param name="sqlService">Sql service</param>
         /// <param name="sqlColumnService">Sql column service</param>
-        /// <param name="cacheService">Cache service</param>
         public SqlRepositoryBase(ISqlService sqlService, ISqlColumnService sqlColumnService, ICacheService cacheService)
         {
             this.sqlService = sqlService;
             this.sqlColumnService = sqlColumnService;
             this.cacheService = cacheService;
-        }
-
-        /// <summary>
-        /// Initialize sql service
-        /// </summary>
-        /// <param name="sqlService">Sql service</param>
-        /// <param name="sqlColumnService">Sql column service</param>
-        /// <param name="keyValueStore">In memory cache service</param>
-        public SqlRepositoryBase(ISqlService sqlService, ISqlColumnService sqlColumnService, IKeyValueStore keyValueStore)
-        {
-            this.sqlService = sqlService;
-            this.sqlColumnService = sqlColumnService;
-            this.keyValueStore = keyValueStore;
         }
 
         /// <summary>
@@ -64,38 +48,7 @@ namespace Simplic.Data.Sql
         /// <returns>Instance of <see cref="TModel"/> if exists</returns>
         public virtual TModel Get(TId id)
         {
-            var key = $"{TableName}_{PrimaryKeyColumn}_{id}";
-            TModel obj;
-
-            if (UseCache && cacheService != null)
-            {
-                obj = cacheService.Get<TModel>(key);
-                if (obj != null)
-                    return obj;
-            }
-
-            if (UseCache && keyValueStore != null)
-            {
-                var json = keyValueStore.StringGet(key);
-                if (!string.IsNullOrWhiteSpace(json))
-                    return JsonConvert.DeserializeObject<TModel>(json);
-            }
-
-            obj = GetByColumn<TId>(PrimaryKeyColumn, id);
-
-            if (obj != null)
-            {
-                if (UseCache && cacheService != null)
-                    cacheService.Set<TModel>(key, obj);
-
-                if (UseCache && keyValueStore != null)
-                {
-                    var json = JsonConvert.SerializeObject(obj);
-                    keyValueStore.StringSet(key, json);
-                }
-            }
-
-            return obj;
+            return GetByColumn<TId>(PrimaryKeyColumn, id);
         }
 
         /// <summary>
@@ -107,12 +60,23 @@ namespace Simplic.Data.Sql
         /// <returns>Model if exists</returns>
         protected virtual TModel GetByColumn<T>(string columnName, T id)
         {
+            var key = $"{TableName}_{columnName}_{id}";
+
             TModel obj = default(TModel);
+            if (UseCache)
+            {
+                obj = cacheService.Get<TModel>(key);
+                if (obj != null)
+                    return obj;
+            }
 
             return sqlService.OpenConnection((connection) =>
             {
                 obj = connection.Query<TModel>($"SELECT * FROM {TableName} WHERE {columnName} = :id",
                     new { id = id }).FirstOrDefault();
+
+                if (UseCache)
+                    cacheService.Set<TModel>(key, obj);
 
                 return obj;
             }, GetConnection());
@@ -154,15 +118,10 @@ namespace Simplic.Data.Sql
 
             return sqlService.OpenConnection((connection) =>
             {
-                var key = $"{TableName}_{PrimaryKeyColumn}_{GetId(obj)}";
-
-                if (UseCache && cacheService != null)
-                    cacheService.Remove<TModel>(key);
-
-                if (UseCache && keyValueStore != null)
+                if (UseCache)
                 {
-                    var json = JsonConvert.SerializeObject(obj);
-                    keyValueStore.StringSet(key, json);
+                    var key = $"{TableName}_{PrimaryKeyColumn}_{GetId(obj)}";
+                    cacheService.Remove<TModel>(key);
                 }
 
                 string sqlStatement = $"INSERT INTO {TableName} ({string.Join(", ", columns.Select(item => item.Key))}) ON EXISTING UPDATE VALUES "
@@ -178,14 +137,6 @@ namespace Simplic.Data.Sql
         /// <returns>True if successful</returns>
         public virtual bool Delete(TModel obj)
         {
-            var key = $"{TableName}_{PrimaryKeyColumn}_{GetId(obj)}";
-
-            if (UseCache && cacheService != null)
-                cacheService.Remove<TModel>(key);
-
-            if (UseCache && keyValueStore != null)
-                keyValueStore.StringSet(key, null);
-
             return sqlService.OpenConnection((connection) =>
             {
                 return connection.Execute($"DELETE FROM {TableName} WHERE {PrimaryKeyColumn} = :id",
@@ -200,14 +151,6 @@ namespace Simplic.Data.Sql
         /// <returns>True if successful</returns>
         public virtual bool Delete(TId id)
         {
-            var key = $"{TableName}_{PrimaryKeyColumn}_{id}";
-
-            if (UseCache && cacheService != null)
-                cacheService.Remove<TModel>(key);
-
-            if (UseCache && keyValueStore != null)
-                keyValueStore.StringSet(key, null);
-
             return sqlService.OpenConnection((connection) =>
             {
                 return connection.Execute($"DELETE FROM {TableName} WHERE {PrimaryKeyColumn} = :id",

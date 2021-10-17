@@ -34,5 +34,16 @@ namespace Simplic.Data.NoSql
         /// <param name="filter"></param>
         /// <returns>Enumerable of entities</returns>
         Task<IEnumerable<TDocument>> GetByFilterAsync(TFilter filter);
+
+        /// <summary>
+        /// Finds the documents matching the filter.
+        /// </summary>
+        /// <param name="predicate">The filter predicate</param>
+        /// <param name="skip">Number of skipped entities</param>
+        /// <param name="limit">Number of requested entities</param>
+        /// <param name="sortField">Sort field</param>
+        /// <param name="isAscending">Ascending or Descending sort</param>
+        /// <returns><see cref="TDocument"/> entities matching the search criteria</returns>
+        Task<IEnumerable<TDocument>> FindAsync(TFilter predicate, int? skip, int? limit, string sortField = "", bool isAscending = true);
     }
 }
