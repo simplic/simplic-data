@@ -24,7 +24,7 @@ namespace Simplic.Data.MongoDB
 
         protected MongoRepositoryBase(IMongoContext context, string configurationKey) : base(context, configurationKey)
         {
-            
+
         }
 
         /// <summary>
@@ -35,6 +35,12 @@ namespace Simplic.Data.MongoDB
         {
             await Initialize();
             Context.AddCommand(() => Collection.InsertOneAsync(document));
+        }
+
+        public virtual async Task CreateAsync(TDocument document, ITransaction transaction)
+        {
+            if (transaction is MongoTransaction mongoTransaction)
+                await Collection.InsertOneAsync(mongoTransaction.Session, document);
         }
 
         /// <summary>
