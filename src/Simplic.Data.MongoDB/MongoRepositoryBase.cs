@@ -39,8 +39,13 @@ namespace Simplic.Data.MongoDB
 
         public virtual async Task CreateAsync(TDocument document, ITransaction transaction)
         {
+            if (transaction == null)
+                throw new System.ArgumentNullException(nameof(transaction));
+
             if (transaction is MongoTransaction mongoTransaction)
                 await Collection.InsertOneAsync(mongoTransaction.Session, document);
+            else
+                throw new System.Exception($"Transaction is no of type {typeof(MongoTransaction).FullName}.");
         }
 
         /// <summary>
