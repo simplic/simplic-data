@@ -24,7 +24,6 @@ namespace Simplic.Data.MongoDB
 
         protected MongoRepositoryBase(IMongoContext context, string configurationKey) : base(context, configurationKey)
         {
-
         }
 
         /// <summary>
@@ -37,6 +36,12 @@ namespace Simplic.Data.MongoDB
             Context.AddCommand(() => Collection.InsertOneAsync(document));
         }
 
+        /// <summary>
+        /// Adds creation of a new entity to transaction.
+        /// </summary>
+        /// <param name="document">Entity to add.</param>
+        /// <param name="transaction">Transaction.</param>
+        /// <returns></returns>
         public virtual async Task CreateAsync(TDocument document, ITransaction transaction)
         {
             if (transaction == null)
@@ -59,6 +64,22 @@ namespace Simplic.Data.MongoDB
         }
 
         /// <summary>
+        /// Adds update of an entity into transaction.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="transaction"></param>
+        public virtual async Task UpdateAsync(TDocument document, ITransaction transaction)
+        {
+            if (transaction == null)
+                throw new System.ArgumentNullException(nameof(transaction));
+
+            if (transaction is MongoTransaction mongoTransaction)
+                await Collection.ReplaceOneAsync(GetFilterById(document.Id), document);
+            else
+                throw new System.Exception($"Transaction is no of type {typeof(MongoTransaction).FullName}.");
+        }
+
+        /// <summary>
         /// Mark entity as deleted in database
         /// </summary>
         /// <param name="id">Entity id</param>
@@ -72,6 +93,25 @@ namespace Simplic.Data.MongoDB
                 document.IsDeleted = true;
                 await UpdateAsync(document);
             }
+        }
+
+        public virtual async Task DeleteAsync(TId id, ITransaction transaction)
+        {
+            if (transaction == null)
+                throw new System.ArgumentNullException(nameof(transaction));
+
+            if (transaction is MongoTransaction mongoTransaction)
+            {
+                var document = await GetAsync(id);
+                if (document != null)
+                {
+                    document.IsDeleted = true;
+                    await UpdateAsync(document, transaction);
+                }
+            }
+            else
+                throw new System.Exception($"Transaction is no of type {typeof(MongoTransaction).FullName}.");
+
         }
 
         /// <summary>
