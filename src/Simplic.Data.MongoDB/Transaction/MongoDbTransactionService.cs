@@ -10,12 +10,12 @@ namespace Simplic.Data.MongoDB
     {
         private readonly MongoContext context;
 
-        protected MongoDbTransactionService(IMongoContext context)
+        public MongoDbTransactionService(IMongoContext context)
         {
             this.context = (MongoContext)context;
         }
 
-        protected MongoDbTransactionService(IMongoContext context, string configurationKey)
+        public MongoDbTransactionService(IMongoContext context, string configurationKey)
         {
             this.context = (MongoContext)context;
             context.SetConfiguration(configurationKey);
