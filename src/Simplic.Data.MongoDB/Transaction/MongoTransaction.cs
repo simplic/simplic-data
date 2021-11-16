@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MongoDB.Driver;
 
 namespace Simplic.Data.MongoDB
 {
+    /// <summary>
+    /// Transaction class for the mongo db.
+    /// </summary>
     internal class MongoTransaction : ITransaction, IDisposable
     {
+        /// <inheritdoc/>
         public void Dispose()
         {
             Session?.Dispose();
