@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Simplic.Data
+﻿namespace Simplic.Data
 {
     /// <summary>
     /// Behaviour for getting an id from an object
