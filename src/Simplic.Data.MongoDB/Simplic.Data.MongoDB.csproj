@@ -41,12 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Transaction\MongoDbTransactionService.cs" />
     <Compile Include="MongoReadOnlyRepositoryBase.cs" />
     <Compile Include="MongoRepositoryBase.cs" />
     <Compile Include="IMongoContext.cs" />
     <Compile Include="IOrganizationIdProvider.cs" />
     <Compile Include="IUserIdProvider.cs" />
     <Compile Include="MongoContext.cs" />
+    <Compile Include="Transaction\MongoTransaction.cs" />
     <Compile Include="OrganizationRepository\OrganizationDocumentBase.cs" />
     <Compile Include="OrganizationRepository\OrganizationFilterBase.cs" />
     <Compile Include="OrganizationRepository\MongoOrganizationRepositoryBase.cs" />

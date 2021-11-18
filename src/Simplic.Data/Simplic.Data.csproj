@@ -44,6 +44,8 @@
     <Compile Include="IExternalDataBase.cs" />
     <Compile Include="IModelIdentity.cs" />
     <Compile Include="IRepositoryBase.cs" />
+    <Compile Include="Transaction\ITransaction.cs" />
+    <Compile Include="Transaction\ITransactionService.cs" />
     <Compile Include="NoSql\IDatabaseContext.cs" />
     <Compile Include="NoSql\IDocument.cs" />
     <Compile Include="NoSql\IFilter.cs" />
