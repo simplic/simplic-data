@@ -66,11 +66,13 @@ namespace Simplic.Data
             }
 
             await builder.TransactionService.CommitAsync(await builder.GetTransaction());
+            builder.Tasks.Clear();
         }
 
         public static async Task AbortAsync(this IFluentTransactionBuilder builder)
         {
             await builder.TransactionService.AbortAsync(await builder.GetTransaction());
+            builder.Tasks.Clear();
         }
     }
 }
