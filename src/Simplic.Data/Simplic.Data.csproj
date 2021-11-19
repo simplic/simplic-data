@@ -41,10 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fluent\FluentTransactionExtension.cs" />
+    <Compile Include="Fluent\FluentTransactionBuilder.cs" />
+    <Compile Include="Fluent\IFluentTransactionBuilder.cs" />
+    <Compile Include="Fluent\FluentTransactionService.cs" />
+    <Compile Include="Fluent\IFluentTransactionService.cs" />
     <Compile Include="IExternalDataBase.cs" />
     <Compile Include="IModelIdentity.cs" />
     <Compile Include="IRepositoryBase.cs" />
     <Compile Include="Transaction\ITransaction.cs" />
+    <Compile Include="Transaction\ITransactionRepository.cs" />
     <Compile Include="Transaction\ITransactionService.cs" />
     <Compile Include="NoSql\IDatabaseContext.cs" />
     <Compile Include="NoSql\IDocument.cs" />
@@ -56,6 +62,7 @@
     <Compile Include="RepositoryGroupAttribute.cs" />
     <Compile Include="SqlServiceBase.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
