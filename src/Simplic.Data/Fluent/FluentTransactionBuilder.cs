@@ -30,7 +30,7 @@ namespace Simplic.Data
         /// <inheritdoc />
         public ITransactionRepository<T, I> GetService<T, I>() where T : new()
         {
-            return (ITransactionRepository<T, I>)services.FirstOrDefault();
+            return services.OfType<ITransactionRepository<T, I>>().FirstOrDefault();
         }
 
         /// <inheritdoc />
