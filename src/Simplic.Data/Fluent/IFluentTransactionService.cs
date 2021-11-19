@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Simplic.Data
+﻿namespace Simplic.Data
 {
+    /// <summary>
+    /// Service for creation fluent trunsaction builder instances
+    /// </summary>
     public interface IFluentTransactionService
     {
+        /// <summary>
+        /// Create new transaction builder
+        /// </summary>
+        /// <returns>Instance of a transaction builder</returns>
         IFluentTransactionBuilder BeginTransaction();
     }
 }

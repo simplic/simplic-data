@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Simplic.Data
+﻿namespace Simplic.Data
 {
+    /// <inheritdoc />
     public class FluentTransactionService : IFluentTransactionService
     {
         private readonly ITransactionService transactionService;
 
+        /// <summary>
+        /// Initialize service
+        /// </summary>
+        /// <param name="transactionService">Transaction service instance</param>
         public FluentTransactionService(ITransactionService transactionService)
         {
             this.transactionService = transactionService;
         }
 
+
+        /// <inheritdoc />
         public IFluentTransactionBuilder BeginTransaction()
         {
             var builder = new FluentTransactionBuilder(transactionService);
