@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ENV", "ENV", "{5E32B106-2AD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplic.Data.MongoDB", "Simplic.Data.MongoDB\Simplic.Data.MongoDB.csproj", "{B2685C75-0BBE-4F8F-963F-D707E4EDC3AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplic.Data.Test", "Simplic.Data.Test\Simplic.Data.Test.csproj", "{649007F0-E8C6-48C2-ABB5-BC03C376CC58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplic.Data.Test", "Simplic.Data.Test\Simplic.Data.Test.csproj", "{4146561D-860E-4455-8C8A-98554452C5B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +36,10 @@ Global
 		{B2685C75-0BBE-4F8F-963F-D707E4EDC3AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2685C75-0BBE-4F8F-963F-D707E4EDC3AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2685C75-0BBE-4F8F-963F-D707E4EDC3AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{649007F0-E8C6-48C2-ABB5-BC03C376CC58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{649007F0-E8C6-48C2-ABB5-BC03C376CC58}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{649007F0-E8C6-48C2-ABB5-BC03C376CC58}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{649007F0-E8C6-48C2-ABB5-BC03C376CC58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4146561D-860E-4455-8C8A-98554452C5B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4146561D-860E-4455-8C8A-98554452C5B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4146561D-860E-4455-8C8A-98554452C5B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4146561D-860E-4455-8C8A-98554452C5B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
