@@ -18,9 +18,7 @@
         /// <inheritdoc />
         public IFluentTransactionBuilder BeginTransaction()
         {
-            var builder = new FluentTransactionBuilder(transactionService);
-
-            return builder;
+            return new FluentTransactionBuilder(transactionService);
         }
     }
 }
