@@ -8,7 +8,7 @@ namespace Simplic.Data
     /// <inheritdoc />
     public class FluentTransactionBuilder : IFluentTransactionBuilder
     {
-        private readonly IList<object> services;
+        private readonly IList<object> services = new List<object>();
         private ITransaction transaction;
 
         /// <summary>
@@ -17,7 +17,6 @@ namespace Simplic.Data
         /// <param name="transactionService">Transaction service instance</param>
         public FluentTransactionBuilder(ITransactionService transactionService)
         {
-            services = new List<object>();
             TransactionService = transactionService;
         }
 
