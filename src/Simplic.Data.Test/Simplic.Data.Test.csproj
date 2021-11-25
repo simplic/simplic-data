@@ -1,17 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DDA22FE5-3893-4C26-A1AD-EB19A9379BC7}</ProjectGuid>
+    <ProjectGuid>{4146561D-860E-4455-8C8A-98554452C5B4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Simplic.Data</RootNamespace>
-    <AssemblyName>Simplic.Data</AssemblyName>
+    <RootNamespace>Simplic.Data.Test</RootNamespace>
+    <AssemblyName>Simplic.Data.Test</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,34 +44,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fluent\FluentTransactionExtension.cs" />
-    <Compile Include="Fluent\FluentTransactionBuilder.cs" />
-    <Compile Include="Fluent\IFluentTransactionBuilder.cs" />
-    <Compile Include="Fluent\FluentTransactionService.cs" />
-    <Compile Include="Fluent\IFluentTransactionService.cs" />
-    <Compile Include="IExternalDataBase.cs" />
-    <Compile Include="IModelIdentity.cs" />
-    <Compile Include="IRepositoryBase.cs" />
-    <Compile Include="Transaction\ITransaction.cs" />
-    <Compile Include="Transaction\ITransactionRepository.cs" />
-    <Compile Include="Transaction\ITransactionService.cs" />
-    <Compile Include="NoSql\IDatabaseContext.cs" />
-    <Compile Include="NoSql\IDocument.cs" />
-    <Compile Include="NoSql\IFilter.cs" />
-    <Compile Include="NoSql\IOrganizationRepository.cs" />
-    <Compile Include="NoSql\IReadOnlyRepository.cs" />
-    <Compile Include="NoSql\IRepository.cs" />
+    <Compile Include="Fluent\FluentTransactionBuilderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RepositoryGroupAttribute.cs" />
-    <Compile Include="SqlServiceBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Moq">
+      <Version>4.16.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit">
+      <Version>2.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.runner.visualstudio">
+      <Version>2.4.3</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simplic.Data\Simplic.Data.csproj">
+      <Project>{dda22fe5-3893-4c26-a1ad-eb19a9379bc7}</Project>
+      <Name>Simplic.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
