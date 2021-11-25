@@ -1,8 +1,6 @@
 using Moq;
-using System;
 using System.Threading.Tasks;
 using Xunit;
-using Simplic.Data;
 
 namespace Simplic.Data.Test
 {
