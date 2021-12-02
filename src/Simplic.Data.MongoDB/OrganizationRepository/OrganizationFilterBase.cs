@@ -23,8 +23,20 @@ namespace Simplic.Data.MongoDB
         /// Gets or sets whether to filter deleted data
         /// </summary>
         public bool? IsDeleted { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets wether all organisations will be queried.
+        /// </summary>
         public bool QueryAllOrganizations { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a list of included ids.
+        /// </summary>
         public IList<Guid> IncludeIds { get; set; }
+
+        /// <summary>
+        /// Gets or sets an exclude id.
+        /// </summary>
         public Guid? ExcludeId { get; set; }
     }
 }
