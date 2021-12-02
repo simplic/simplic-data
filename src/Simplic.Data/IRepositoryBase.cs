@@ -13,13 +13,13 @@ namespace Simplic.Data
         /// Get data by id
         /// </summary>
         /// <param name="id">Id</param>
-        /// <returns>Instance of <see cref="TModel"/> if exists</returns>
+        /// <returns>Instance of <typeparamref name="TModel"/> if exists</returns>
         TModel Get(TId id);
 
         /// <summary>
         /// Get all objects
         /// </summary>
-        /// <returns>Enumerable of <see cref="TModel"/></returns>
+        /// <returns>Enumerable of <typeparamref name="TModel"/> </returns>
         IEnumerable<TModel> GetAll();
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Simplic.Data
         /// <summary>
         /// Delete data by id
         /// </summary>
-        /// <param name="obj">Object to delete</param>
+        /// <param name="id">Id of an object to delete</param>
         /// <returns>True if successful</returns>
         bool Delete(TId id);
     }

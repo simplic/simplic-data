@@ -34,6 +34,7 @@ namespace Simplic.Data.Sql
         /// </summary>
         /// <param name="sqlService">Sql service</param>
         /// <param name="sqlColumnService">Sql column service</param>
+        /// <param name="cacheService">Cache service</param>
         public SqlRepositoryBase(ISqlService sqlService, ISqlColumnService sqlColumnService, ICacheService cacheService)
         {
             this.sqlService = sqlService;
@@ -45,7 +46,7 @@ namespace Simplic.Data.Sql
         /// Get data by id
         /// </summary>
         /// <param name="id">Id</param>
-        /// <returns>Instance of <see cref="TModel"/> if exists</returns>
+        /// <returns>Instance of <typeparamref name="TModel"/> if exists</returns>
         public virtual TModel Get(TId id)
         {
             return GetByColumn<TId>(PrimaryKeyColumn, id);
@@ -85,7 +86,7 @@ namespace Simplic.Data.Sql
         /// <summary>
         /// Get all objects
         /// </summary>
-        /// <returns>Enumerable of <see cref="TModel"/></returns>
+        /// <returns>Enumerable of <typeparamref name="TModel"/>.</returns>
         public virtual IEnumerable<TModel> GetAll()
         {
             return sqlService.OpenConnection((connection) =>
@@ -97,7 +98,7 @@ namespace Simplic.Data.Sql
         /// <summary>
         /// Get all objects where a given column value match
         /// </summary>
-        /// <returns>Enumerable of <see cref="TModel"/></returns>
+        /// <returns>Enumerable of <typeparamref name="TModel"/></returns>
         protected virtual IEnumerable<TModel> GetAllByColumn<T>(string columnName, T id)
         {
             return sqlService.OpenConnection((connection) =>
@@ -147,7 +148,7 @@ namespace Simplic.Data.Sql
         /// <summary>
         /// Delete data by id
         /// </summary>
-        /// <param name="obj">Object to delete</param>
+        /// <param name="id">Id of an object to delete</param>
         /// <returns>True if successful</returns>
         public virtual bool Delete(TId id)
         {
