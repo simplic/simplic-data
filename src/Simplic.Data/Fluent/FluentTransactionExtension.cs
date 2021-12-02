@@ -11,14 +11,14 @@ namespace Simplic.Data
         /// <summary>
         /// Add a service to the actual fluent builder
         /// </summary>
-        /// <typeparam name="K">Service type</typeparam>
-        /// <typeparam name="T">Object type</typeparam>
-        /// <typeparam name="I">Object unique id type</typeparam>
+        /// <typeparam name="TService">Service type</typeparam>
+        /// <typeparam name="TModel">Object type</typeparam>
+        /// <typeparam name="TId">Object unique id type</typeparam>
         /// <param name="builder">Actual builder instance</param>
         /// <param name="service">Service to register/add</param>
         /// <returns>The builder instance that was passed to the method</returns>
-        public static IFluentTransactionBuilder AddService<K, T, I>(this IFluentTransactionBuilder builder, K service) where K : ITransactionRepository<T, I>
-                                                                                                                       where T : new()
+        public static IFluentTransactionBuilder AddService<TService, TModel, TId>(this IFluentTransactionBuilder builder, TService service) where TService : ITransactionRepository<TModel, TId>
+                                                                                                                       where TModel : new()
         {
             builder.AddService(service);
 
@@ -28,16 +28,16 @@ namespace Simplic.Data
         /// <summary>
         /// Calls the create method from a service
         /// </summary>
-        /// <typeparam name="K">Service type</typeparam>
-        /// <typeparam name="T">Object type</typeparam>
-        /// <typeparam name="I">Object unique id type</typeparam>
+        /// <typeparam name="TService">Service type</typeparam>
+        /// <typeparam name="TModel">Object type</typeparam>
+        /// <typeparam name="TId">Object unique id type</typeparam>
         /// <param name="builder">Actual builder instance</param>
         /// <param name="func">Delegate for getting the data to create</param>
         /// <returns>The builder instance that was passed to the method</returns>
-        public static IFluentTransactionBuilder Create<K, T, I>(this IFluentTransactionBuilder builder, Func<ITransactionRepository<T, I>, T> func) where K : ITransactionRepository<T, I>
-                                                                                                                                                    where T : new()
+        public static IFluentTransactionBuilder Create<TService, TModel, TId>(this IFluentTransactionBuilder builder, Func<ITransactionRepository<TModel, TId>, TModel> func) where TService : ITransactionRepository<TModel, TId>
+                                                                                                                                                    where TModel : new()
         {
-            var service = builder.GetService<T, I>();
+            var service = builder.GetService<TModel, TId>();
             var item = func(service);
 
             builder.Tasks.Add(async () => await service.CreateAsync(item, await builder.GetTransaction()));
@@ -48,16 +48,16 @@ namespace Simplic.Data
         /// <summary>
         /// Calls the update method from a service
         /// </summary>
-        /// <typeparam name="K">Service type</typeparam>
-        /// <typeparam name="T">Object type</typeparam>
-        /// <typeparam name="I">Object unique id type</typeparam>
+        /// <typeparam name="TService">Service type</typeparam>
+        /// <typeparam name="TModel">Object type</typeparam>
+        /// <typeparam name="TId">Object unique id type</typeparam>
         /// <param name="builder">Actual builder instance</param>
         /// <param name="func">Delegate for getting the data to update</param>
         /// <returns>The builder instance that was passed to the method</returns>
-        public static IFluentTransactionBuilder Update<K, T, I>(this IFluentTransactionBuilder builder, Func<ITransactionRepository<T, I>, T> func) where K : ITransactionRepository<T, I>
-                                                                                                                                                    where T : new()
+        public static IFluentTransactionBuilder Update<TService, TModel, TId>(this IFluentTransactionBuilder builder, Func<ITransactionRepository<TModel, TId>, TModel> func) where TService : ITransactionRepository<TModel, TId>
+                                                                                                                                                    where TModel : new()
         {
-            var service = builder.GetService<T, I>();
+            var service = builder.GetService<TModel, TId>();
             var item = func(service);
 
             builder.Tasks.Add(async () => await service.UpdateAsync(item, await builder.GetTransaction()));
@@ -68,16 +68,16 @@ namespace Simplic.Data
         /// <summary>
         /// Calls the delete method from a service
         /// </summary>
-        /// <typeparam name="K">Service type</typeparam>
-        /// <typeparam name="T">Object type</typeparam>
-        /// <typeparam name="I">Object unique id type</typeparam>
+        /// <typeparam name="TService">Service type</typeparam>
+        /// <typeparam name="TModel">Object type</typeparam>
+        /// <typeparam name="TId">Object unique id type</typeparam>
         /// <param name="builder">Actual builder instance</param>
         /// <param name="func">Delegate for getting the id of the data to delete</param>
         /// <returns>The builder instance that was passed to the method</returns>
-        public static IFluentTransactionBuilder Delete<K, T, I>(this IFluentTransactionBuilder builder, Func<ITransactionRepository<T, I>, I> func) where K : ITransactionRepository<T, I>
-                                                                                                                                                    where T : new()
+        public static IFluentTransactionBuilder Delete<TService, TModel, TId>(this IFluentTransactionBuilder builder, Func<ITransactionRepository<TModel, TId>, TId> func) where TService : ITransactionRepository<TModel, TId>
+                                                                                                                                                    where TModel : new()
         {
-            var service = builder.GetService<T, I>();
+            var service = builder.GetService<TModel, TId>();
             var id = func(service);
 
             builder.Tasks.Add(async () => await service.DeleteAsync(id, await builder.GetTransaction()));

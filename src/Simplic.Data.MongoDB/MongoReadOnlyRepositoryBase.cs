@@ -6,24 +6,50 @@ using MongoDB.Driver;
 
 namespace Simplic.Data.MongoDB
 {
+    /// <summary>
+    /// Base implementation of a mongo db read only repository.
+    /// </summary>
+    /// <typeparam name="TId">The type of the id.</typeparam>
+    /// <typeparam name="TDocument">The type of the document.</typeparam>
+    /// <typeparam name="TFilter">The type of the filter.</typeparam>
     public abstract class MongoReadOnlyRepositoryBase<TId, TDocument, TFilter> : IReadOnlyRepository<TId, TDocument, TFilter>
         where TDocument : IDocument<TId>
         where TFilter : IFilter<TId>, new()
     {
+        /// <summary>
+        /// Gets the context.
+        /// </summary>
         protected readonly IMongoContext Context;
+
+        /// <summary>
+        /// Getss the collection.
+        /// </summary>
         protected IMongoCollection<TDocument> Collection;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="MongoReadOnlyRepositoryBase{TId, TDocument, TFilter}"/>.
+        /// </summary>
+        /// <param name="context"></param>
         protected MongoReadOnlyRepositoryBase(IMongoContext context)
         {
             Context = context;
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="MongoReadOnlyRepositoryBase{TId, TDocument, TFilter}"/>
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="configurationKey"></param>
         protected MongoReadOnlyRepositoryBase(IMongoContext context, string configurationKey)
         {
             Context = context;
             context.SetConfiguration(configurationKey);
         }
 
+        /// <summary>
+        /// Initializes a new collection.
+        /// </summary>
+        /// <returns></returns>
         protected async Task Initialize()
         {
             if (Collection == null)
@@ -34,8 +60,13 @@ namespace Simplic.Data.MongoDB
             await Task.CompletedTask; // TODO change Initialize signature and all call sites to sync versions
         }
 
+        /// <summary>
+        /// Gets the collection name.
+        /// </summary>
+        /// <returns></returns>
         protected virtual string GetCollectionName() => typeof(TDocument).Name;
 
+        ///<inheritdoc/>
         public virtual async Task<TDocument> GetAsync(TId id)
         {
             await Initialize();
@@ -45,6 +76,7 @@ namespace Simplic.Data.MongoDB
             return data.SingleOrDefault();
         }
 
+        ///<inheritdoc/>
         public virtual async Task<IEnumerable<TDocument>> GetAllAsync()
         {
             await Initialize();
@@ -52,6 +84,7 @@ namespace Simplic.Data.MongoDB
             return await GetByFilterAsync(new TFilter());
         }
 
+        ///<inheritdoc/>
         public virtual async Task<IEnumerable<TDocument>> GetByFilterAsync(TFilter filter)
         {
             await Initialize();
@@ -60,16 +93,29 @@ namespace Simplic.Data.MongoDB
                 .ToEnumerable();
         }
 
+        /// <summary>
+        /// Disposes the context.
+        /// </summary>
         public void Dispose()
         {
             Context?.Dispose();
         }
 
+        /// <summary>
+        /// Gets an enumerable of filter definitions.
+        /// </summary>
+        /// <param name="filter">A filter.</param>
+        /// <returns>A list of filter definitions.</returns>
         protected virtual IEnumerable<FilterDefinition<TDocument>> GetFilterQueries(TFilter filter)
         {
             return new List<FilterDefinition<TDocument>>();
         }
 
+        /// <summary>
+        /// Builds a filter query.
+        /// </summary>
+        /// <param name="filter">A filter.</param>
+        /// <returns>A filter definition for the document.</returns>
         protected FilterDefinition<TDocument> BuildFilterQuery(TFilter filter)
         {
             var filterQueries = GetFilterQueries(filter).ToList();
@@ -96,7 +142,7 @@ namespace Simplic.Data.MongoDB
         /// <param name="limit">Number of requested entities</param>
         /// <param name="sortField">Sort field</param>
         /// <param name="isAscending">Ascending or Descending sort</param>
-        /// <returns><see cref="TDocument"/> entities matching the search criteria</returns>
+        /// <returns><typeparamref name="TDocument"/> entities matching the search criteria</returns>
         public virtual async Task<IEnumerable<TDocument>> FindAsync(TFilter predicate, int? skip, int? limit, string sortField = "", bool isAscending = true)
         {
             await Initialize();
