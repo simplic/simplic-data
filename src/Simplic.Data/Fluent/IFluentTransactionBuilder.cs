@@ -14,18 +14,18 @@ namespace Simplic.Data
         /// <summary>
         /// Gets a service from the builder
         /// </summary>
-        /// <typeparam name="T">Object type</typeparam>
-        /// <typeparam name="I">Unique id type</typeparam>
+        /// <typeparam name="TModel">Object type</typeparam>
+        /// <typeparam name="TId">Unique id type</typeparam>
         /// <returns>Service instance</returns>
-        ITransactionRepository<T, I> GetService<T, I>() where T : new();
+        ITransactionRepository<TModel, TId> GetService<TModel, TId>() where TModel : new();
 
         /// <summary>
         /// Adds a service-instance to the current builder
         /// </summary>
-        /// <typeparam name="T">Object type</typeparam>
-        /// <typeparam name="I">Unique id type</typeparam>
+        /// <typeparam name="TModel">Object type</typeparam>
+        /// <typeparam name="TId">Unique id type</typeparam>
         /// <param name="service">Service instance</param>
-        void AddService<T, I>(ITransactionRepository<T, I> service) where T : new();
+        void AddService<TModel, TId>(ITransactionRepository<TModel, TId> service) where TModel : new();
 
         /// <summary>
         /// Creates a new transaction if no transaction is existing. Only one instance
