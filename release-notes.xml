@@ -15,4 +15,7 @@
   <ChangeSet guid="bd6e090b-c7ba-45f3-8fd0-8d2305cafa37">
     <Change type="feature">Add fluent builder and transaction as generic implementation.</Change>
   </ChangeSet>
+  <ChangeSet>
+    <Change type="feature">Adds a basic interface for models with an id.</Change>
+  </ChangeSet>
 </ReleaseNotes>
