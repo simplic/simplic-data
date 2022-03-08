@@ -7,7 +7,7 @@
     public interface IModel<TId>
     {
         /// <summary>
-        /// Identifer of the model.
+        /// Gets or sets the identifier of the model.
         /// </summary>
         TId Id { get; set; }
     }
