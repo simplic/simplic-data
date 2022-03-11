@@ -48,7 +48,6 @@
     <Compile Include="Fluent\FluentTransactionService.cs" />
     <Compile Include="Fluent\IFluentTransactionService.cs" />
     <Compile Include="IExternalDataBase.cs" />
-    <Compile Include="IModel.cs" />
     <Compile Include="IModelIdentity.cs" />
     <Compile Include="IRepositoryBase.cs" />
     <Compile Include="Transaction\ITransaction.cs" />

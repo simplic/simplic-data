@@ -18,4 +18,7 @@
   <ChangeSet guid="a0eb0e1c-6072-4a20-ba4f-58909aac9a6f">
     <Change type="feature">Adds a basic interface for models with an id.</Change>
   </ChangeSet>
+  <ChangeSet>
+    <Change type="feature">Removes unneccessary interface for models with an id.</Change>
+  </ChangeSet>
 </ReleaseNotes>
