@@ -21,15 +21,15 @@ namespace Simplic.Data
         }
 
         /// <inheritdoc />
-        public void AddService<T, I>(ITransactionRepository<T, I> service) where T : new()
+        public void AddService<TModel, TId>(ITransactionRepository<TModel, TId> service) where TModel : new()
         {
             services.Add(service);
         }
 
         /// <inheritdoc />
-        public ITransactionRepository<T, I> GetService<T, I>() where T : new()
+        public ITransactionRepository<TModel, TId> GetService<TModel, TId>() where TModel : new()
         {
-            return services.OfType<ITransactionRepository<T, I>>().FirstOrDefault();
+            return services.OfType<ITransactionRepository<TModel, TId>>().FirstOrDefault();
         }
 
         /// <inheritdoc />

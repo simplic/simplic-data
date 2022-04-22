@@ -15,6 +15,12 @@
   <ChangeSet guid="bd6e090b-c7ba-45f3-8fd0-8d2305cafa37">
     <Change type="feature">Add fluent builder and transaction as generic implementation.</Change>
   </ChangeSet>
+  <ChangeSet guid="a0eb0e1c-6072-4a20-ba4f-58909aac9a6f">
+    <Change type="feature">Adds a basic interface for models with an id.</Change>
+  </ChangeSet>
+  <ChangeSet guid="fac808a3-435d-4f27-916a-90a25b84743f">
+    <Change type="feature">Removes unneccessary interface for models with an id.</Change>
+  </ChangeSet>
   <ChangeSet>
     <Change type="feature">Adds a .net stadard project Simplic.Data.Web for resources needed in web applications and the Simplic Studio.</Change>
     <Change type="feature">Adds a json converter to handly polymorphism with typename handling.</Change>

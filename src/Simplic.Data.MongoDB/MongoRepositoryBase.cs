@@ -18,18 +18,23 @@ namespace Simplic.Data.MongoDB
         /// Initialize base repository
         /// </summary>
         /// <param name="context"></param>
-        protected MongoRepositoryBase(IMongoContext context) : base(context) 
-        { 
+        protected MongoRepositoryBase(IMongoContext context) : base(context)
+        {
         }
 
+        /// <summary>
+        /// initializes a new instance of <see cref="MongoRepositoryBase{TId, TDocument, TFilter}"/>
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="configurationKey"></param>
         protected MongoRepositoryBase(IMongoContext context, string configurationKey) : base(context, configurationKey)
-        { 
+        {
         }
 
         /// <summary>
         /// Create new entity
         /// </summary>
-        /// <param name="entity">Entity to create</param>
+        /// <param name="document">Entity to create</param>
         public virtual async Task CreateAsync(TDocument document)
         {
             await Initialize();
@@ -39,7 +44,7 @@ namespace Simplic.Data.MongoDB
         /// <summary>
         /// Update an entity in the database
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="document">The document with the updated values.</param>
         public virtual async Task UpdateAsync(TDocument document)
         {
             await Initialize();
@@ -60,7 +65,7 @@ namespace Simplic.Data.MongoDB
                 document.IsDeleted = true;
                 await UpdateAsync(document);
             }
-        }        
+        }
 
         /// <summary>
         /// Create or replace entity
