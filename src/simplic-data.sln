@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplic.Data.MongoDB", "Sim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplic.Data.Test", "Simplic.Data.Test\Simplic.Data.Test.csproj", "{4146561D-860E-4455-8C8A-98554452C5B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplic.Data.Web", "Simplic.Data.Web\Simplic.Data.Web.csproj", "{EAA85BCE-8877-417E-ACDD-C9B77896A623}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{4146561D-860E-4455-8C8A-98554452C5B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4146561D-860E-4455-8C8A-98554452C5B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4146561D-860E-4455-8C8A-98554452C5B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAA85BCE-8877-417E-ACDD-C9B77896A623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAA85BCE-8877-417E-ACDD-C9B77896A623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAA85BCE-8877-417E-ACDD-C9B77896A623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAA85BCE-8877-417E-ACDD-C9B77896A623}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
