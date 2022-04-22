@@ -21,4 +21,8 @@
   <ChangeSet guid="fac808a3-435d-4f27-916a-90a25b84743f">
     <Change type="feature">Removes unneccessary interface for models with an id.</Change>
   </ChangeSet>
+  <ChangeSet>
+    <Change type="feature">Adds a .net stadard project Simplic.Data.Web for resources needed in web applications and the Simplic Studio.</Change>
+    <Change type="feature">Adds a json converter to handle polymorphism with typename handling.</Change>
+  </ChangeSet>
 </ReleaseNotes>
