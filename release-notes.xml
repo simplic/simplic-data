@@ -15,4 +15,8 @@
   <ChangeSet guid="bd6e090b-c7ba-45f3-8fd0-8d2305cafa37">
     <Change type="feature">Add fluent builder and transaction as generic implementation.</Change>
   </ChangeSet>
+  <ChangeSet>
+    <Change type="feature">Adds a .net stadard project Simplic.Data.Web for resources needed in web applications and the Simplic Studio.</Change>
+    <Change type="feature">Adds a json converter to handly polymorphism with typename handling.</Change>
+  </ChangeSet>
 </ReleaseNotes>
