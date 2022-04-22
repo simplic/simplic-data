@@ -23,6 +23,6 @@
   </ChangeSet>
   <ChangeSet>
     <Change type="feature">Adds a .net stadard project Simplic.Data.Web for resources needed in web applications and the Simplic Studio.</Change>
-    <Change type="feature">Adds a json converter to handly polymorphism with typename handling.</Change>
+    <Change type="feature">Adds a json converter to handle polymorphism with typename handling.</Change>
   </ChangeSet>
 </ReleaseNotes>
