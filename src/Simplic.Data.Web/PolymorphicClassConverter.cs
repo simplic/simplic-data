@@ -5,7 +5,7 @@ namespace Simplic.Data.Web
 {
     // The original solotion is from: https://stackoverflow.com/questions/32314638/signalr-typenamehandling/64890938#64890938
     // with the following answer used https://stackoverflow.com/a/40279480
-    // Also some things where removed since they where unused.
+    // Also some things where removed since they where unused. 
 
     /// <summary>
     /// Json converter for polymorphic classes. 
